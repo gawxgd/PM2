@@ -4,10 +4,10 @@ tDane = double(dane.t);
 xDane = double(dane.x);
 yDane = double(dane.y);
 N = length(tDane);
-rx = linspace(0,40,30);
-ry = linspace(-1,0,30);
-rxx = linspace(-0.1,0,30);
-x0 = linspace(100,1000,30);
+rx = linspace(0,40,5);
+ry = linspace(-1,0,5);
+rxx = linspace(-0.1,0,5);
+x0 = linspace(100,1000,5);
 combs = combinations(x0,rx,ry,rxx);
 combs = table2array(combs);
 sols = zeros(length(rx),1);
@@ -23,13 +23,15 @@ for i=2:length(rx)
     %     minIndex = i;
     % end
 end
+sols
 sols = sols(~isnan(sols));
 mini = min(sols);
 miniIndex = find(sols==mini);
 startvalues = [combs(miniIndex,1),combs(miniIndex,2),combs(miniIndex,3),...
     combs(miniIndex,4)];
 solve = @(x) Solve(x(1),x(2),x(3),x(4),N,xDane,yDane,tDane);
-fminsearch(solve,startvalues)
+result = fminsearch(solve,startvalues)
+solve(startvalues)
 function solution = Solve(x0,rx,rxy,rxx,N,xDane,yDane,tDane)
     xEstimate = zeros(N,1);
     xEstimate(1) = x0;
@@ -41,6 +43,8 @@ function solution = Solve(x0,rx,rxy,rxx,N,xDane,yDane,tDane)
     end
     sum  = 0;
     for i=1:N
+        przy = xEstimate(i);
+        dok = xDane(i);
         sum = sum + (xEstimate(i)-xDane(i)).^2;
     end
     %Jx = @(xn) cumsum((xEstimate - xDane) .^ 2);
