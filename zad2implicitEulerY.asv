@@ -1,0 +1,18 @@
+function yVect = zad2implicitEulerY(y0,t,x,R)
+    yn = zeros(length(t),1);
+    yn(1) = y0;
+    ry = R(1);
+    rxy = R(2);
+    ryy = R(3);
+    for i=2:length(t)
+        tn = t(i) - t(i - 1);
+        [y1, y2] = findRoots([ryy * tn,ry * tn + rxy * x(i) * tn -1 ,1]);
+        if y1 < 0 
+            yn(i) = y2;
+        elseif y2 < 0
+            yn(i) = y1;
+        else
+            
+        end
+    end
+    yVect = yn;
