@@ -45,8 +45,6 @@ hold on
 plot(tDane,xDane)
 title("Wykres populacji x jawny Heun")
 legend("populacja przybliżona","populacja dokładna")
-xlabel("t - czas")
-ylabel("liczność populacji")
 
 figure(2)
 plot(tDane,Heun(opt_PopY(1),tDane,xDane,opt_PopY(1,2:end)))
@@ -54,5 +52,3 @@ hold on
 plot(tDane,yDane)
 title("Wykres populacji y jawny Heun")
 legend("populacja przybliżona","populacja dokładna")
-xlabel("t - czas")
-ylabel("liczność populacji")
