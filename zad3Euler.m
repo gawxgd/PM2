@@ -42,42 +42,44 @@ opt_PopY = fminsearch(tempFunc2,Rminimum2);
 JxAll = @(Est) sum(sum((Est - [xDane,yDane]).^2));
 AllParams = [opt_PopX,opt_PopY];
 
-minimizeFunc = @(x) JxAll(odeSolver(x,tDane));
+minimizeFunc = @(x) JxAll(EulerSolver(x,tDane));
 options = optimset('fminsearch');
 options.MaxIter = 4000;
 options.MaxFunEvals = 5000;
 optAll = fminsearch(minimizeFunc,AllParams,options)
-Est = odeSolver(optAll,tDane);
-
+Est = EulerSolver(optAll,tDane);
 figure(1)
-
 plot(tDane,Est(:,1))
 hold on
-plot(tDane,xDane')
+plot(tDane,xDane)
 title("Wykres populacji x")
 legend("populacja przybliżona","populacja dokładna")
 
 figure(2)
-
-
 plot(tDane,Est(:,2))
 hold on
 plot(tDane,yDane)
 title("Wykres populacji y")
 legend("populacja przybliżona","populacja dokładna")
 
-function Est = odeSolver(AllParams,tDane)
-    optX = AllParams(1:4);
-    optY = AllParams(5:end);
-    startVal = [optX(1), optY(1)];
-    URRZ = @(t,y) [optX(2) * y(1) + optX(3) * y(1) * y(2) + ...
-        optX(4) * y(1) * y(1); optY(2) * y(2) + optY(3)...
-        * y(1) * y(2) + optY(4) * y(2) * y(2)];
-    [t,y] = ode45(URRZ,[0 3],startVal); 
-    xEst = interp1(t, y(:,1),tDane);
-    yEst = interp1(t, y(:,2),tDane);
-    Est = [xEst,yEst];
-    
-end
-
-
+function Est = EulerSolver(allParams,tDane)
+        h = 0.001;
+        t = min(tDane):h:max(tDane);
+        xO = allParams(1:4); 
+        yO = allParams(5:end);
+        fx = @(x, y) xO(2) * x + xO(3) * x * y + xO(4) * x * x;
+        fy = @(x, y) yO(2) * y + yO(3) * y * x + yO(4) * y * y;
+        xEst = zeros(length(tDane),1);
+        xEst(1) = xO(1);
+        yEst = zeros(length(tDane),1); 
+        yEst(1) = yO(1);
+        for i = 2:length(t)
+            tn = t(i) - t(i-1);
+            xEst(i) = xEst(i-1) + fx(xEst(i-1), yEst(i-1)) * tn;
+            yEst(i) = yEst(i-1) + fy(xEst(i-1), yEst(i-1)) * tn;
+        end % for
+        xEst = interp1(t, xEst, tDane);
+        yEst = interp1(t, yEst, tDane);
+        Est = [xEst,yEst];
+    end
+  
