@@ -46,21 +46,25 @@ minimizeFunc = @(x) JxAll(EulerSolver(x,tDane));
 options = optimset('fminsearch');
 options.MaxIter = 4000;
 options.MaxFunEvals = 5000;
-optAll = fminsearch(minimizeFunc,AllParams,options)
+[optAll,fval] = fminsearch(minimizeFunc,AllParams,options)
 Est = EulerSolver(optAll,tDane);
 figure(1)
 plot(tDane,Est(:,1))
 hold on
 plot(tDane,xDane)
-title("Wykres populacji x")
+title("Wykres populacji x jawna metoda Eulera")
 legend("populacja przybliżona","populacja dokładna")
+xlabel("t - czas")
+ylabel("liczność populacji")
 
 figure(2)
 plot(tDane,Est(:,2))
 hold on
 plot(tDane,yDane)
-title("Wykres populacji y")
+title("Wykres populacji y jawna metoda Eulera")
 legend("populacja przybliżona","populacja dokładna")
+xlabel("t - czas")
+ylabel("liczność populacji")
 
 function Est = EulerSolver(allParams,tDane)
         h = 0.001;

@@ -1,9 +1,12 @@
 clear
 % Wczytanie danych
-dane = readtable("dane16.csv");
-tDane = double(dane.t);
-xDane = double(dane.x);
-yDane = double(dane.y);
+dane = readtable("HudsonBay.csv");
+tDane = double(dane.Year);
+xDane = double(dane.Hares);
+yDane = double(dane.Lynx);
+
+tDane = tDane - tDane(1);
+tDane = tDane / 30;
 % Początkowe Parametry
 rx = linspace(0,40,20);
 ry = linspace(-1,0,10);
@@ -46,7 +49,7 @@ minimizeFunc = @(x) JxAll(odeSolver(x,tDane));
 options = optimset('fminsearch');
 options.MaxIter = 4000;
 options.MaxFunEvals = 5000;
-[optAll,fVal] = fminsearch(minimizeFunc,AllParams,options)
+[optAll,fval] = fminsearch(minimizeFunc,AllParams,options)
 Est = odeSolver(optAll,tDane);
 
 figure(1)
@@ -54,10 +57,8 @@ figure(1)
 plot(tDane,Est(:,1))
 hold on
 plot(tDane,xDane')
-title("Wykres populacji x ode45")
+title("Wykres populacji x")
 legend("populacja przybliżona","populacja dokładna")
-xlabel("t - czas")
-ylabel("liczność populacji")
 
 figure(2)
 
@@ -65,10 +66,8 @@ figure(2)
 plot(tDane,Est(:,2))
 hold on
 plot(tDane,yDane)
-title("Wykres populacji y ode45")
+title("Wykres populacji y")
 legend("populacja przybliżona","populacja dokładna")
-xlabel("t - czas")
-ylabel("liczność populacji")
 
 function Est = odeSolver(AllParams,tDane)
     optX = AllParams(1:4);
