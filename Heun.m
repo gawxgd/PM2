@@ -1,4 +1,4 @@
-function vect = Heun(x0,t,ydok,R)
+function vect = HeunX(x0,t,ydok,R)
     xn = zeros(length(t),1);
     xn(1) = x0;
     rx = R(1);

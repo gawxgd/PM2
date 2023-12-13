@@ -27,7 +27,7 @@ sols = zeros(length(rx),1);
 sols2 = zeros(length(ry2),1);
 for i=1:length(combs)
     sols(i) = Jx(Heun(combs(i,1),tDane,yDane,combs(i,2:end)));
-    sols2(i) = Jx2(Heun(combs2(i,1),tDane,xDane,combs2(i,2:end)));
+    sols2(i) = Jx2(HeunY(combs2(i,1),tDane,xDane,combs2(i,2:end)));
 end
 minimum = min(sols);
 Rminimum = combs(sols == minimum,:);
@@ -36,10 +36,12 @@ tempFunc = @(x) Jx(Heun(x(1),tDane,yDane,x(2:end)));
 
 minimum2 = min(sols2);
 Rminimum2 = combs2(sols2 == minimum2,:);
-tempFunc2 = @(x) Jx2(Heun(x(1),tDane,xDane,x(2:end)));
+tempFunc2 = @(x) Jx2(HeunY(x(1),tDane,xDane,x(2:end)));
 [opt_PopY,fval] = fminsearch(tempFunc2,Rminimum2)
 
 figure(1)
+ax = gca;
+ax.FontSize = 16;
 plot(tDane,Heun(opt_PopX(1),tDane,yDane,opt_PopX(1,2:end)))
 hold on
 plot(tDane,xDane)
@@ -49,7 +51,9 @@ xlabel("t - czas")
 ylabel("liczność populacji")
 
 figure(2)
-plot(tDane,Heun(opt_PopY(1),tDane,xDane,opt_PopY(1,2:end)))
+ax = gca;
+ax.FontSize = 16;
+plot(tDane,HeunY(opt_PopY(1),tDane,xDane,opt_PopY(1,2:end)))
 hold on
 plot(tDane,yDane)
 title("Wykres populacji y jawny Heun")
