@@ -40,8 +40,7 @@ tempFunc2 = @(x) Jx2(HeunY(x(1),tDane,xDane,x(2:end)));
 [opt_PopY,fval] = fminsearch(tempFunc2,Rminimum2)
 
 figure(1)
-ax = gca;
-ax.FontSize = 16;
+
 plot(tDane,Heun(opt_PopX(1),tDane,yDane,opt_PopX(1,2:end)))
 hold on
 plot(tDane,xDane)
@@ -51,8 +50,7 @@ xlabel("t - czas")
 ylabel("liczność populacji")
 
 figure(2)
-ax = gca;
-ax.FontSize = 16;
+
 plot(tDane,HeunY(opt_PopY(1),tDane,xDane,opt_PopY(1,2:end)))
 hold on
 plot(tDane,yDane)

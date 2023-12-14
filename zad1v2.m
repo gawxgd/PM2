@@ -39,23 +39,21 @@ Rminimum2 = combs2(sols2 == minimum2,:);
 tempFunc2 = @(x) Jx2(zad1EulerY(x(1),tDane,xDane,x(2:end)));
 [opt_PopY,val] = fminsearch(tempFunc2,Rminimum2)
 figure(1)
-ax = gca;
-ax.FontSize = 16;
+
 plot(tDane,zad1Euler(opt_PopX(1),tDane,yDane,opt_PopX(1,2:end)))
 hold on
 plot(tDane,xDane)
-title("Wykres populacji x")
+title("Wykres populacji x",16)
 legend("populacja przybliżona","populacja dokładna")
 xlabel("t - czas")
 ylabel("liczność populacji")
 
 figure(2)
-ax = gca;
-ax.FontSize = 16;
+
 plot(tDane,zad1EulerY(opt_PopY(1),tDane,xDane,opt_PopY(1,2:end)))
 hold on
 plot(tDane,yDane)
-title("Wykres populacji y")
+title("Wykres populacji y",16)
 legend("populacja przybliżona","populacja dokładna")
 xlabel("t - czas")
 ylabel("liczność populacji")
