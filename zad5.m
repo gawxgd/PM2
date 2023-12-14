@@ -11,12 +11,12 @@ tDane = tDane / 30;
 rx = linspace(0,40,20);
 ry = linspace(-1,0,10);
 rxx = linspace(-0.1,0,20);
-x0 = linspace(100,1000,50);
+x0 = mean(xDane);
 
 ry2 = linspace(-40,0,20);
 ryx = linspace(0,1,10);
 ryy = linspace(-0.1,0,20);
-y0 = linspace(10,200,50);
+y0 = mean(yDane);
 
 combs = combinations(x0,rx,ry,rxx);
 combs = table2array(combs);
@@ -57,7 +57,7 @@ figure(1)
 plot(tDane,Est(:,1))
 hold on
 plot(tDane,xDane')
-title("Wykres populacji x")
+title("Wykres populacji zajęcy")
 legend("populacja przybliżona","populacja dokładna")
 
 figure(2)
@@ -66,7 +66,7 @@ figure(2)
 plot(tDane,Est(:,2))
 hold on
 plot(tDane,yDane)
-title("Wykres populacji y")
+title("Wykres populacji rysi")
 legend("populacja przybliżona","populacja dokładna")
 
 function Est = odeSolver(AllParams,tDane)

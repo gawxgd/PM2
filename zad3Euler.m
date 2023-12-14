@@ -49,8 +49,7 @@ options.MaxFunEvals = 5000;
 [optAll,fval] = fminsearch(minimizeFunc,AllParams,options)
 Est = EulerSolver(optAll,tDane);
 figure(1)
-ax = gca;
-ax.FontSize = 16;
+
 plot(tDane,Est(:,1))
 hold on
 plot(tDane,xDane)
@@ -60,8 +59,7 @@ xlabel("t - czas")
 ylabel("liczność populacji")
 
 figure(2)
-ax = gca;
-ax.FontSize = 16;
+
 plot(tDane,Est(:,2))
 hold on
 plot(tDane,yDane)
